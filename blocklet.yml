@@ -9,7 +9,7 @@ did: z2qa9KeK9o5vgcvnuVEYVzah614wNS6AgWVdc
 main: api/index.js
 author:
   name: lynnlee0522
-  email: 386984469@qq.com
+  email: lilinlf@foxmail.com
 repository:
   type: git
   url: git+https://github.com/blocklet/create-blocklet.git
@@ -53,3 +53,4 @@ environments:
 capabilities: {}
 screenshots: []
 components: []
+

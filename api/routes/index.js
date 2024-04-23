@@ -1,6 +1,8 @@
 const middleware = require('@blocklet/sdk/lib/middlewares');
 const router = require('express').Router();
+const { findUser, saveUser } = require('../controller/user.controller');
 
-router.use('/user', middleware.user(), (req, res) => res.json(req.user || {}));
+router.post('/user', middleware.user(), findUser);
+router.post('/saveUser', middleware.user(), saveUser);
 
 module.exports = router;
