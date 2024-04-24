@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Select, MenuItem, OutlinedInput } from '@mui/material';
+import { Select, MenuItem } from '@mui/material';
 
 export const LocaleSelector = () => {
   const [selectedValue, setSelectedValue] = useState('zh');

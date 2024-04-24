@@ -10,30 +10,42 @@ class UserController {
    */
   async findUser(req, res) {
     // 1.查询用户传递过来的信息
-    const { did } = req.body;
-    const result = await userService.findUser(did);
-    res.json({
-      errno: '0',
-      data: result,
-    });
+    try {
+      const { did } = req.body;
+      const result = await userService.findUser(did);
+      res.json({
+        errno: '0',
+        data: result,
+      });
+    } catch (error) {
+      res.json({
+        errno: '500',
+        errmsg: error,
+      });
+    }
   }
 
   async saveUser(req, res) {
-    const user = req.body;
-    const { did } = user;
-
-    // 判断是否有该用户信息
-    const result = await userService.findUser(did);
-    if (!result) {
-      const res = await userService.createUser(user);
-    } else {
-      const res = await userService.updateUser(user);
+    try {
+      const user = req.body;
+      const { did } = user;
+      // 判断是否有该用户信息
+      const result = await userService.findUser(did);
+      if (!result) {
+        await userService.createUser(user);
+      } else {
+        await userService.updateUser(user);
+      }
+      res.json({
+        errno: '0',
+        data: {},
+      });
+    } catch (error) {
+      res.json({
+        errno: '500',
+        errmsg: error,
+      });
     }
-
-    res.json({
-      errno: '0',
-      data: {},
-    });
   }
 }
 

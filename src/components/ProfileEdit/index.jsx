@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import InfoRow from '@arcblock/ux/lib/InfoRow';
 import Button from '@arcblock/ux/lib/Button';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorFallback } from '@arcblock/ux/lib/ErrorBoundary';
 import TextField from '@mui/material/TextField';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
@@ -58,58 +60,60 @@ export const ProfileEdit = ({ userInfo, setMode, getInfo }) => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <InfoRow nameWidth={80} name={t('userName')}>
-        <TextField
-          label="userName"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          error={!!formik.errors?.userName}
-          helperText={formik.errors.userName}
-          {...formik.getFieldProps('userName')}
-        />
-      </InfoRow>
-      <InfoRow nameWidth={80} name={t('phone')} style={{ overflow: 'visible' }} className={styles.phone}>
-        <TextField
-          label="phone"
-          color="primary"
-          fullWidth
-          error={!!formik.errors?.phone}
-          helperText={formik.errors.phone}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <PhoneInput
-                defaultCountry="cn"
-                {...formik.getFieldProps('phone')}
-                onChange={(value) => {
-                  formik.setFieldValue('phone', value);
-                }}
-              />
-            ),
-          }}
-        />
-      </InfoRow>
-      <InfoRow nameWidth={80} name={t('mail')}>
-        <TextField
-          label="mail"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          error={!!formik.errors?.mail}
-          helperText={formik.errors.mail}
-          {...formik.getFieldProps('mail')}
-        />
-      </InfoRow>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <form onSubmit={formik.handleSubmit}>
+        <InfoRow nameWidth={80} name={t('userName')}>
+          <TextField
+            label="userName"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            error={!!formik.errors?.userName}
+            helperText={formik.errors.userName}
+            {...formik.getFieldProps('userName')}
+          />
+        </InfoRow>
+        <InfoRow nameWidth={80} name={t('phone')} style={{ overflow: 'visible' }} className={styles.phone}>
+          <TextField
+            label="phone"
+            color="primary"
+            fullWidth
+            error={!!formik.errors?.phone}
+            helperText={formik.errors.phone}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <PhoneInput
+                  defaultCountry="cn"
+                  {...formik.getFieldProps('phone')}
+                  onChange={(value) => {
+                    formik.setFieldValue('phone', value);
+                  }}
+                />
+              ),
+            }}
+          />
+        </InfoRow>
+        <InfoRow nameWidth={80} name={t('mail')}>
+          <TextField
+            label="mail"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            error={!!formik.errors?.mail}
+            helperText={formik.errors.mail}
+            {...formik.getFieldProps('mail')}
+          />
+        </InfoRow>
 
-      <Button variant="contained" color="primary" type="submit" loading={isLoading}>
-        {t('save')}
-      </Button>
-      <Button variant="contained" className={styles.cancelBtn} onClick={handleCancel}>
-        {t('cancel')}
-      </Button>
-      <SnackbarComponent />
-    </form>
+        <Button variant="contained" color="primary" type="submit" loading={isLoading}>
+          {t('save')}
+        </Button>
+        <Button variant="contained" className={styles.cancelBtn} onClick={handleCancel}>
+          {t('cancel')}
+        </Button>
+        <SnackbarComponent />
+      </form>
+    </ErrorBoundary>
   );
 };
